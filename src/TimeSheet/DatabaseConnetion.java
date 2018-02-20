@@ -7,7 +7,7 @@ package TimeSheet;
 
 /**
  *
- * @author Shaun
+ * @author Banele Mlamleli
  */
 import java.awt.HeadlessException;
 import java.sql.*;
