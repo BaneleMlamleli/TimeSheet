@@ -142,7 +142,7 @@ public class TimeSheet extends javax.swing.JFrame implements Runnable{
         lblLoggedInUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblLoggedInUser.setToolTipText("Person who logged in");
 
-        lblRunningTimeMicroSec.setFont(new java.awt.Font("OCR A Std", 1, 18)); // NOI18N
+        lblRunningTimeMicroSec.setFont(new java.awt.Font("Digital dream", 1, 18)); // NOI18N
         lblRunningTimeMicroSec.setForeground(new java.awt.Color(102, 102, 255));
         lblRunningTimeMicroSec.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblRunningTimeMicroSec.setText("000");
@@ -181,7 +181,7 @@ public class TimeSheet extends javax.swing.JFrame implements Runnable{
 
         txtDisplayUserTime.setEditable(false);
 
-        lblRunningTime.setFont(new java.awt.Font("OCR A Std", 1, 48)); // NOI18N
+        lblRunningTime.setFont(new java.awt.Font("Digital dream", 1, 48)); // NOI18N
         lblRunningTime.setForeground(new java.awt.Color(102, 102, 255));
         lblRunningTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblRunningTime.setText("00:00:00");
