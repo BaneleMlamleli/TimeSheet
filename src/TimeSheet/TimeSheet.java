@@ -18,6 +18,9 @@ public class TimeSheet extends javax.swing.JFrame implements Runnable{
         reset();
     }
     
+    @Override
+    public void run() {}
+    
     public void reset(){
         hours = 0; minutes = 0; seconds = 0; microSeconds = 0; count1 = 0;
         nstr = "00:00:00"; mstr = "000"; dstr = "";
