@@ -1,111 +1,70 @@
 
 package TimeSheet;
 
+import static java.lang.Thread.sleep;
 import javax.swing.*;
-public class TimeSheet extends javax.swing.JFrame implements Runnable{
+import java.util.*;
+public class TimeSheet extends javax.swing.JFrame{
+    Date dt = new Date();
     
-    Thread t;
-    int hours = 0, minutes = 0, seconds = 0, microSeconds = 0;
-    String str = "", nstr = "", mstr = "", dstr = "";
-    int count = 0, count1 = 0;
+    int hours = dt.getHours(), minutes = dt.getMinutes(),
+        seconds = dt.getSeconds(), milliSeconds = 0;
+    String startTime = "";
+    boolean state = true;
     
     /**
      * Creates new form TimeSheet
      */
     public TimeSheet() {
         initComponents();
-        t = new Thread(this);
-        reset();
-    }
-    
-    @Override
-    public void run() {}
-    
-    public void reset(){
-        hours = 0; minutes = 0; seconds = 0; microSeconds = 0; count1 = 0;
-        nstr = "00:00:00"; mstr = "000"; dstr = "";
-        display();
-    }
-    
-    public void display(){
-        lblRunningTime.setText(nstr);
-        lblRunningTimeMicroSec.setText(mstr);
-    }
-    
-    public void setTimeCounter(){
-        nstr = "";
-        if(hours < 10){
-            nstr = "0"+ hours;
-        }else{
-            nstr = ""+hours;
-        }
-        
-        if(minutes < 10){
-            nstr += ":0"+minutes;
-        }else{
-            nstr += ":"+minutes;
-        }
-        
-        if(seconds < 10){
-            nstr += ":0"+seconds;
-        }else{
-            nstr += ":"+seconds;
-        }
-    }
-    
-    public void setMTimeCounter(){
-        mstr = "";
-        if(minutes < 10){
-            mstr = "00"+minutes;
-        }else{
-            if(minutes >= 10 && minutes < 100){
-                mstr = "0"+minutes;
-            }else{
-                mstr = ""+minutes;
-            }
-        }
+        runTime();
     }
     
     public void runTime(){
-        try{
-            while(true){
-                minutes++;
-                if(minutes > 999){
-                    minutes = 0;
-                    seconds++;
+        state = true;
+        Thread t;
+        t = new Thread(){
+            public void run(){
+                for(;;){
+                    if(state){
+                        try{
+                            sleep(1);
+                            if(milliSeconds > 1000){
+                                milliSeconds = 0;
+                                seconds++;
+                            }
+                            
+                            if(seconds > 60){
+                                milliSeconds = 0;
+                                seconds = 0;
+                                minutes++;
+                            }               
+                            if(minutes > 60){
+                                milliSeconds = 0;
+                                seconds = 0;
+                                minutes = 0;
+                                hours++;
+                            }
+                            milliSeconds++;
+                            //lblRunningTimeMilliSec.setText(""+milliSeconds);
+                            lblHours.setText(""+hours);
+                            lblMinute.setText(""+minutes);
+                            lblSecond.setText(""+seconds);
+                        }catch(InterruptedException error){
+                            JOptionPane.showMessageDialog(null, "Error in runTime method","runTime method"+
+                            error.getMessage(),JOptionPane.ERROR_MESSAGE);
+                        }
+                    }else{
+                        break;
+                    }
                 }
-                
-                if(seconds > 59){
-                    seconds = 0;
-                    minutes++;
-                }
-                
-                if(minutes > 59){
-                    minutes = 0;
-                    hours++;
-                }
-                        
-                if(hours > 99){
-                    reset();
-                }
-                
-                setTimeCounter();
-                setMTimeCounter();
-                display();
-                Thread.sleep(1);
             }
-        }catch (Exception error){
-            JOptionPane.showMessageDialog(null, "Error in runTime method","runTime method"+
-                    error.getMessage(),JOptionPane.ERROR_MESSAGE);
-        }
+        };
+        t.start();
+        startTime = dt.getHours()+":"+dt.getMinutes()+":"+dt.getSeconds();
+        lblStartTime.setText(startTime);
     }
-    
-    public void printToList(){
-        count1++;
-        dstr = "\n"+count1+") "+lblRunningTime.getText()+" "+
-                lblRunningTimeMicroSec.getText()+"\n";
-        txtDisplayUserTime.setText(dstr);
-    }
+
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -118,16 +77,19 @@ public class TimeSheet extends javax.swing.JFrame implements Runnable{
 
         jPanel1 = new javax.swing.JPanel();
         lblLoggedInUser = new javax.swing.JLabel();
-        lblRunningTimeMicroSec = new javax.swing.JLabel();
-        txtEndTime = new javax.swing.JTextField();
-        txtStartTime = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        btnStopTimeSheet = new javax.swing.JButton();
         btnAmendTimeSheet = new javax.swing.JButton();
         txtDisplayUserTime = new java.awt.TextField();
-        lblRunningTime = new javax.swing.JLabel();
+        lblMinute = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
+        btnStopTimeSheet = new javax.swing.JButton();
+        lblStartTime = new javax.swing.JLabel();
+        lblStopTime = new javax.swing.JLabel();
+        lblHours = new javax.swing.JLabel();
+        lblSecond = new javax.swing.JLabel();
+        lblHours1 = new javax.swing.JLabel();
+        lblHours2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -145,33 +107,8 @@ public class TimeSheet extends javax.swing.JFrame implements Runnable{
         lblLoggedInUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblLoggedInUser.setToolTipText("Person who logged in");
 
-        lblRunningTimeMicroSec.setFont(new java.awt.Font("Digital dream", 1, 18)); // NOI18N
-        lblRunningTimeMicroSec.setForeground(new java.awt.Color(102, 102, 255));
-        lblRunningTimeMicroSec.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblRunningTimeMicroSec.setText("000");
-        lblRunningTimeMicroSec.setToolTipText("Running time");
-
-        txtEndTime.setEditable(false);
-        txtEndTime.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        txtEndTime.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtEndTime.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        txtStartTime.setEditable(false);
-        txtStartTime.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        txtStartTime.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtStartTime.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         jLabel1.setText("-");
-
-        btnStopTimeSheet.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnStopTimeSheet.setText("Stop timesheet");
-        btnStopTimeSheet.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnStopTimeSheet.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnStopTimeSheetActionPerformed(evt);
-            }
-        });
 
         btnAmendTimeSheet.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnAmendTimeSheet.setText("Amend timesheet");
@@ -184,74 +121,116 @@ public class TimeSheet extends javax.swing.JFrame implements Runnable{
 
         txtDisplayUserTime.setEditable(false);
 
-        lblRunningTime.setFont(new java.awt.Font("Digital dream", 1, 48)); // NOI18N
-        lblRunningTime.setForeground(new java.awt.Color(102, 102, 255));
-        lblRunningTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblRunningTime.setText("00:00:00");
-        lblRunningTime.setToolTipText("Running time");
+        lblMinute.setFont(new java.awt.Font("Digital dream", 1, 36)); // NOI18N
+        lblMinute.setForeground(new java.awt.Color(102, 102, 255));
+        lblMinute.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblMinute.setText("00");
+        lblMinute.setToolTipText("Running time");
+
+        btnStopTimeSheet.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnStopTimeSheet.setText("Stop timesheet");
+        btnStopTimeSheet.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnStopTimeSheet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStopTimeSheetActionPerformed(evt);
+            }
+        });
+
+        lblStartTime.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblStartTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblStartTime.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        lblStopTime.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblStopTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblStopTime.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        lblHours.setFont(new java.awt.Font("Digital dream", 1, 36)); // NOI18N
+        lblHours.setForeground(new java.awt.Color(102, 102, 255));
+        lblHours.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblHours.setText("00");
+        lblHours.setToolTipText("Running time");
+
+        lblSecond.setFont(new java.awt.Font("Digital dream", 1, 36)); // NOI18N
+        lblSecond.setForeground(new java.awt.Color(102, 102, 255));
+        lblSecond.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSecond.setText("00");
+        lblSecond.setToolTipText("Running time");
+
+        lblHours1.setFont(new java.awt.Font("Digital dream", 1, 36)); // NOI18N
+        lblHours1.setForeground(new java.awt.Color(102, 102, 255));
+        lblHours1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblHours1.setText(":");
+        lblHours1.setToolTipText("Running time");
+
+        lblHours2.setFont(new java.awt.Font("Digital dream", 1, 36)); // NOI18N
+        lblHours2.setForeground(new java.awt.Color(102, 102, 255));
+        lblHours2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblHours2.setText(":");
+        lblHours2.setToolTipText("Running time");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lblLoggedInUser, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(121, 121, 121))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(83, 83, 83)
+                .addComponent(lblHours)
+                .addGap(18, 18, 18)
+                .addComponent(lblHours1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblMinute)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblHours2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblSecond)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(btnStopTimeSheet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnAmendTimeSheet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(txtDisplayUserTime, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtStartTime)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtEndTime, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jSeparator1)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jSeparator2)
-                        .addContainerGap())))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblRunningTime)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblRunningTimeMicroSec)
-                        .addGap(58, 58, 58))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblLoggedInUser, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(121, 121, 121))))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtDisplayUserTime, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAmendTimeSheet, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(lblStartTime, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(36, 36, 36)
+                            .addComponent(jLabel1)
+                            .addGap(18, 18, 18)
+                            .addComponent(lblStopTime, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(btnStopTimeSheet, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(lblLoggedInUser, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblRunningTime, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblRunningTimeMicroSec, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblMinute, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSecond, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblHours, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblHours1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblHours2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtStartTime, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtEndTime, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblStartTime, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                    .addComponent(lblStopTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnStopTimeSheet, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAmendTimeSheet, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtDisplayUserTime, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDisplayUserTime, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -293,29 +272,11 @@ public class TimeSheet extends javax.swing.JFrame implements Runnable{
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnStopTimeSheetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStopTimeSheetActionPerformed
-        // TODO add your handling code here:
-        // JOptionPane.showMessageDialog(null, "Timesheet closed!", "Timesheet", JOptionPane.CLOSED_OPTION);
-        if(btnStopTimeSheet.getText().equals("Stop timesheet")){
-            btnStopTimeSheet.setText("Start timesheet");
-            count++;
-            if(count == 1){
-                t.start();
-            }else{
-                t.resume();
-            }
-        }else{
-            btnStopTimeSheet.setText("Stop timesheet");
-            t.suspend();
-            printToList();
-        }       
-    }//GEN-LAST:event_btnStopTimeSheetActionPerformed
 
     private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
         // TODO add your handling code here:
@@ -344,6 +305,17 @@ public class TimeSheet extends javax.swing.JFrame implements Runnable{
         this.dispose();
         new Details().setVisible(true);
     }//GEN-LAST:event_btnAmendTimeSheetActionPerformed
+
+    private void btnStopTimeSheetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStopTimeSheetActionPerformed
+        // TODO add your handling code here:
+        //Add code for the reason why the user is stopping the time(activity)
+        //state = false;
+        String activity = JOptionPane.showInputDialog(null, "Reason for stopping time", "Activity", JOptionPane.INFORMATION_MESSAGE);
+        String stopTime = hours+":"+minutes+":"+seconds;
+        lblStopTime.setText(stopTime);
+        txtDisplayUserTime.setText("\tStart time\t\tStop time\t\tActivity\n==============");//+
+               // "\t\t==============\t\t==============\n"+startTime+"\t\t"+stopTime+"\t\t"+activity);
+    }//GEN-LAST:event_btnStopTimeSheetActionPerformed
 
     /**
      * @param args the command line arguments
@@ -392,11 +364,14 @@ public class TimeSheet extends javax.swing.JFrame implements Runnable{
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel lblHours;
+    private javax.swing.JLabel lblHours1;
+    private javax.swing.JLabel lblHours2;
     private javax.swing.JLabel lblLoggedInUser;
-    private javax.swing.JLabel lblRunningTime;
-    private javax.swing.JLabel lblRunningTimeMicroSec;
+    private javax.swing.JLabel lblMinute;
+    private javax.swing.JLabel lblSecond;
+    private javax.swing.JLabel lblStartTime;
+    private javax.swing.JLabel lblStopTime;
     private java.awt.TextField txtDisplayUserTime;
-    private javax.swing.JTextField txtEndTime;
-    private javax.swing.JTextField txtStartTime;
     // End of variables declaration//GEN-END:variables
 }

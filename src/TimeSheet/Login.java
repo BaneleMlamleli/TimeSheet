@@ -188,16 +188,20 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         boolean loginInfo = dbCon.getLogin(txtUsername.getText(), psdPassword.getText());
         
-        if(!((txtUsername.getText().length() == 0)||(psdPassword.getPassword().length == 0))){
-            if(loginInfo == true){
-                JOptionPane.showMessageDialog(rootPane, "Welcome, "+txtUsername.getText());                
-                this.dispose();
-                new TimeSheet().setVisible(true);
+        if(txtUsername.getText().length() != 0){
+            if(psdPassword.getPassword().length != 0){
+                if(loginInfo){
+                    JOptionPane.showMessageDialog(rootPane, "Welcome, "+txtUsername.getText());                
+                    this.dispose();
+                    new TimeSheet().setVisible(true);
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "Incorrect username or password", "error", JOptionPane.ERROR_MESSAGE);
+                }
             }else{
-                JOptionPane.showMessageDialog(rootPane, "Incorrect username or password", "error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(rootPane, "password field is empty!", "error", JOptionPane.ERROR_MESSAGE);
             }
         }else{
-            JOptionPane.showMessageDialog(rootPane, "username or password cannot be left empty", "error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(rootPane, "username field is empty!", "error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnLoginMouseClicked
 

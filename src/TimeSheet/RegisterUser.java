@@ -282,10 +282,22 @@ public class RegisterUser extends javax.swing.JFrame {
         String confirmPassword = psdConfirmPassword.getText();
         
         if(password.equals(confirmPassword)){
-            if((name.length() == 0) && (surname.length() == 0) && (password.length() == 0) && (confirmPassword.length() == 0)){
-                lblDisplayUsername.setText(objConnection.getRegisterUser(password, title, name, surname));
+            if(name.length() != 0){
+                if(surname.length() != 0){
+                    if(password.length() != 0){
+                        if(confirmPassword.length() != 0){
+                            lblDisplayUsername.setText(objConnection.getRegisterUser(password, title, name, surname));
+                        }else{
+                            JOptionPane.showMessageDialog(null, "Confirm password field is empty!", "Error",JOptionPane.ERROR_MESSAGE);
+                        }
+                        }else{
+                        JOptionPane.showMessageDialog(null, "Password field is empty!", "Error",JOptionPane.ERROR_MESSAGE);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Surname field is empty!", "Error",JOptionPane.ERROR_MESSAGE);
+                }                
             }else{
-                JOptionPane.showMessageDialog(null, "Input field cannot be empty!", "Error",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Name field is empty!", "Error",JOptionPane.ERROR_MESSAGE);
             }
         }else{
             JOptionPane.showMessageDialog(null, "Passwords do not match!", "Error",JOptionPane.ERROR_MESSAGE);
