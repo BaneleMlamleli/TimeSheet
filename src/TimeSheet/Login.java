@@ -15,7 +15,7 @@ public class Login extends javax.swing.JFrame {
     
     //Creating an object for the DatabaseConnection class
     DatabaseConnetion dbCon = new DatabaseConnetion();
-
+    
     /**
      * Creates new form Login
      */
@@ -191,7 +191,9 @@ public class Login extends javax.swing.JFrame {
         if(txtUsername.getText().length() != 0){
             if(psdPassword.getPassword().length != 0){
                 if(loginInfo){
-                    JOptionPane.showMessageDialog(rootPane, "Welcome, "+txtUsername.getText());                
+                    JOptionPane.showMessageDialog(rootPane, "Welcome, "+txtUsername.getText());
+                    LinkClass objLinkClasses = new LinkClass(txtUsername.getText());
+                    //objLinkClasses.setUsername(txtUsername.getText());
                     this.dispose();
                     new TimeSheet().setVisible(true);
                 }else{

@@ -6,10 +6,13 @@ import javax.swing.*;
 import java.util.*;
 public class TimeSheet extends javax.swing.JFrame{
     Date dt = new Date();
-    
+    LinkClass objLinkClasses1 = new LinkClass();
     int hours = dt.getHours(), minutes = dt.getMinutes(),
         seconds = dt.getSeconds(), milliSeconds = 0;
     String startTime = "";
+    String stopTime = "";
+    String secondStopTime = "";
+    int count = 0;
     boolean state = true;
     
     /**
@@ -18,8 +21,9 @@ public class TimeSheet extends javax.swing.JFrame{
     public TimeSheet() {
         initComponents();
         runTime();
+        lblLoggedInUser.setText(objLinkClasses1.toString());
     }
-    
+        
     public void runTime(){
         state = true;
         Thread t;
@@ -47,7 +51,7 @@ public class TimeSheet extends javax.swing.JFrame{
                             }
                             milliSeconds++;
                             //lblRunningTimeMilliSec.setText(""+milliSeconds);
-                            lblHours.setText(""+hours);
+                            lblHour.setText(""+hours);
                             lblMinute.setText(""+minutes);
                             lblSecond.setText(""+seconds);
                         }catch(InterruptedException error){
@@ -79,17 +83,18 @@ public class TimeSheet extends javax.swing.JFrame{
         lblLoggedInUser = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         btnAmendTimeSheet = new javax.swing.JButton();
-        txtDisplayUserTime = new java.awt.TextField();
         lblMinute = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         btnStopTimeSheet = new javax.swing.JButton();
         lblStartTime = new javax.swing.JLabel();
         lblStopTime = new javax.swing.JLabel();
-        lblHours = new javax.swing.JLabel();
+        lblHour = new javax.swing.JLabel();
         lblSecond = new javax.swing.JLabel();
         lblHours1 = new javax.swing.JLabel();
         lblHours2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtDisplayUserTime = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -119,8 +124,6 @@ public class TimeSheet extends javax.swing.JFrame{
             }
         });
 
-        txtDisplayUserTime.setEditable(false);
-
         lblMinute.setFont(new java.awt.Font("Digital dream", 1, 36)); // NOI18N
         lblMinute.setForeground(new java.awt.Color(102, 102, 255));
         lblMinute.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -144,11 +147,11 @@ public class TimeSheet extends javax.swing.JFrame{
         lblStopTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblStopTime.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        lblHours.setFont(new java.awt.Font("Digital dream", 1, 36)); // NOI18N
-        lblHours.setForeground(new java.awt.Color(102, 102, 255));
-        lblHours.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblHours.setText("00");
-        lblHours.setToolTipText("Running time");
+        lblHour.setFont(new java.awt.Font("Digital dream", 1, 36)); // NOI18N
+        lblHour.setForeground(new java.awt.Color(102, 102, 255));
+        lblHour.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblHour.setText("00");
+        lblHour.setToolTipText("Running time");
 
         lblSecond.setFont(new java.awt.Font("Digital dream", 1, 36)); // NOI18N
         lblSecond.setForeground(new java.awt.Color(102, 102, 255));
@@ -168,6 +171,11 @@ public class TimeSheet extends javax.swing.JFrame{
         lblHours2.setText(":");
         lblHours2.setToolTipText("Running time");
 
+        txtDisplayUserTime.setEditable(false);
+        txtDisplayUserTime.setColumns(20);
+        txtDisplayUserTime.setRows(5);
+        jScrollPane1.setViewportView(txtDisplayUserTime);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -178,7 +186,7 @@ public class TimeSheet extends javax.swing.JFrame{
                 .addGap(121, 121, 121))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(83, 83, 83)
-                .addComponent(lblHours)
+                .addComponent(lblHour)
                 .addGap(18, 18, 18)
                 .addComponent(lblHours1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -191,8 +199,8 @@ public class TimeSheet extends javax.swing.JFrame{
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(txtDisplayUserTime, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAmendTimeSheet, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(lblStartTime, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -215,7 +223,7 @@ public class TimeSheet extends javax.swing.JFrame{
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblMinute, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblSecond, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblHours, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblHour, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblHours1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblHours2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
@@ -230,7 +238,7 @@ public class TimeSheet extends javax.swing.JFrame{
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAmendTimeSheet, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtDisplayUserTime, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -307,14 +315,23 @@ public class TimeSheet extends javax.swing.JFrame{
     }//GEN-LAST:event_btnAmendTimeSheetActionPerformed
 
     private void btnStopTimeSheetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStopTimeSheetActionPerformed
-        // TODO add your handling code here:
-        //Add code for the reason why the user is stopping the time(activity)
-        //state = false;
+        count += 1;
+        String labelStopTime = lblStopTime.getText();
         String activity = JOptionPane.showInputDialog(null, "Reason for stopping time", "Activity", JOptionPane.INFORMATION_MESSAGE);
-        String stopTime = hours+":"+minutes+":"+seconds;
+        stopTime = hours+":"+minutes+":"+seconds;
         lblStopTime.setText(stopTime);
-        txtDisplayUserTime.setText("\tStart time\t\tStop time\t\tActivity\n==============");//+
-               // "\t\t==============\t\t==============\n"+startTime+"\t\t"+stopTime+"\t\t"+activity);
+        String initialText = txtDisplayUserTime.getText();
+        String text = "\n"+startTime+"\t\t"+stopTime+"\t\t"+activity;
+        String concatText = initialText+text;
+        txtDisplayUserTime.setText("Start time\t\tStop time\t\tActivity\n========"+"\t\t========\t\t=====\n");
+        if(count >= 2){
+            txtDisplayUserTime.setText("");
+            secondStopTime = lblHour.getText()+":"+lblMinute.getText()+":"+lblSecond.getText();
+            txtDisplayUserTime.append(initialText+"\n"+labelStopTime+"\t\t"+secondStopTime+"\t\t"+activity);
+        }else{
+            txtDisplayUserTime.append(concatText);
+        }
+        
     }//GEN-LAST:event_btnStopTimeSheetActionPerformed
 
     /**
@@ -362,9 +379,10 @@ public class TimeSheet extends javax.swing.JFrame{
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JLabel lblHours;
+    private javax.swing.JLabel lblHour;
     private javax.swing.JLabel lblHours1;
     private javax.swing.JLabel lblHours2;
     private javax.swing.JLabel lblLoggedInUser;
@@ -372,6 +390,6 @@ public class TimeSheet extends javax.swing.JFrame{
     private javax.swing.JLabel lblSecond;
     private javax.swing.JLabel lblStartTime;
     private javax.swing.JLabel lblStopTime;
-    private java.awt.TextField txtDisplayUserTime;
+    private javax.swing.JTextArea txtDisplayUserTime;
     // End of variables declaration//GEN-END:variables
 }
