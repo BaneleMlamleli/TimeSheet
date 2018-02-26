@@ -192,10 +192,8 @@ public class Login extends javax.swing.JFrame {
             if(psdPassword.getPassword().length != 0){
                 if(loginInfo){
                     JOptionPane.showMessageDialog(rootPane, "Welcome, "+txtUsername.getText());
-                    LinkClass objLinkClasses = new LinkClass(txtUsername.getText());
-                    System.out.println("Logged in user:\t"+objLinkClasses.getUsername());
                     this.dispose();
-                    new TimeSheet().setVisible(true);
+                    new TimeSheet(txtUsername.getText()).setVisible(true);
                 }else{
                     JOptionPane.showMessageDialog(rootPane, "Incorrect username or password", "error", JOptionPane.ERROR_MESSAGE);
                 }

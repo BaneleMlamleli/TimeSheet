@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.util.*;
 public class TimeSheet extends javax.swing.JFrame{
     Date dt = new Date();
-    LinkClass objLinkClasses = new LinkClass();
     int hours = dt.getHours(), minutes = dt.getMinutes(),
         seconds = dt.getSeconds(), milliSeconds = 0;
     String startTime = "";
@@ -20,7 +19,11 @@ public class TimeSheet extends javax.swing.JFrame{
     public TimeSheet() {
         initComponents();
         runTime();
-        lblLoggedInUser.setText("Logged in user: "+objLinkClasses.getUsername());
+    }
+    
+    public TimeSheet(String getUsername){
+        initComponents();
+        lblLoggedInUser.setText("Logged in user: "+getUsername);
     }
         
     public void runTime(){
