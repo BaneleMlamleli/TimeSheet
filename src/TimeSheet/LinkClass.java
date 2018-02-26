@@ -62,6 +62,6 @@ public class LinkClass {
     
     @Override
     public String toString(){
-        return "Logged in user:  "+getUsername();
+        return "Logged in user:  "+username;
     }
 }

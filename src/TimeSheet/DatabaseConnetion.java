@@ -49,7 +49,7 @@ public class DatabaseConnetion {
         return login;
     }
     
-    public String getRegisterUser(String password, String title, String name, String surname){
+    public String registerUser(String password, String title, String name, String surname){
         String loginUsername = "";
         try{            
             int countColumns = 1;

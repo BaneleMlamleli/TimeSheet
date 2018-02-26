@@ -286,7 +286,7 @@ public class RegisterUser extends javax.swing.JFrame {
                 if(surname.length() != 0){
                     if(password.length() != 0){
                         if(confirmPassword.length() != 0){
-                            lblDisplayUsername.setText(objConnection.getRegisterUser(password, title, name, surname));
+                            lblDisplayUsername.setText(objConnection.registerUser(password, title, name, surname));
                         }else{
                             JOptionPane.showMessageDialog(null, "Confirm password field is empty!", "Error",JOptionPane.ERROR_MESSAGE);
                         }

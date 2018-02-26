@@ -193,7 +193,7 @@ public class Login extends javax.swing.JFrame {
                 if(loginInfo){
                     JOptionPane.showMessageDialog(rootPane, "Welcome, "+txtUsername.getText());
                     LinkClass objLinkClasses = new LinkClass(txtUsername.getText());
-                    //objLinkClasses.setUsername(txtUsername.getText());
+                    System.out.println("Logged in user:\t"+objLinkClasses.getUsername());
                     this.dispose();
                     new TimeSheet().setVisible(true);
                 }else{
