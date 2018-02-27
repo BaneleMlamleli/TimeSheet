@@ -12,7 +12,7 @@ package TimeSheet;
 import javax.swing.*;
 public class RegisterUser extends javax.swing.JFrame {
     
-    DatabaseConnetion objConnection = new DatabaseConnetion();
+    DatabaseConnection objConnection = new DatabaseConnection();
 
     /**
      * Creates new form RegisterUser

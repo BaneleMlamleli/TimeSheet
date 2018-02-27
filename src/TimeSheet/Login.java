@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
     
     //Creating an object for the DatabaseConnection class
-    DatabaseConnetion dbCon = new DatabaseConnetion();
+    DatabaseConnection dbCon = new DatabaseConnection();
     
     /**
      * Creates new form Login
@@ -170,7 +170,7 @@ public class Login extends javax.swing.JFrame {
 
     private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Product Version: TimeSheet 1.0 (Build 201705191307)\n"+
+        JOptionPane.showMessageDialog(null, "Product Version: TimeSheet 1.0 (Build 2018022021307)\n"+
             "IDE Info: NetBeans IDE 8.2 Patch 2\n"+
             "Java: 1.8.0_144; Java HotSpot(TM) 64-Bit Server VM 25.144-b01\n"+
             "Runtime: Java(TM) SE Runtime Environment 1.8.0_144-b01\n"+
