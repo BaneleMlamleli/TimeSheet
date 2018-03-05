@@ -15,7 +15,8 @@ public class TimeSheet extends javax.swing.JFrame{
     int count = 0;
     boolean state = true;
     String loggedInUser;
-    String myDate = dt.getDate()+"/"+dt.getMonth()+"/"+dt.getYear();
+    String year = Integer.toString(dt.getYear());
+    String myDate = dt.getDate()+"/"+dt.getMonth()+"/"+("20"+year.substring(1, year.length()));
     /**
      * Creates new form TimeSheet
      */
@@ -29,7 +30,10 @@ public class TimeSheet extends javax.swing.JFrame{
         loggedInUser = getLoggedInUsername;
         lblLoggedInUser.setText("Logged in user:   "+getLoggedInUsername);
     }
-        
+    
+    /*
+     * This method will display a counting digital watch simulation
+     */
     public void runTime(){
         state = true;
         Thread t;
@@ -335,12 +339,10 @@ public class TimeSheet extends javax.swing.JFrame{
             txtDisplayUserTime.setText("");
             secondStopTime = lblHour.getText()+":"+lblMinute.getText()+":"+lblSecond.getText();
             txtDisplayUserTime.append(initialText+"\n"+labelStopTime+"\t\t"+secondStopTime+"\t\t"+activity);
-            dbCon.timeSheetEntry(labelStopTime, stopTime, loggedInUser, myDate);
-            dbCon.activityEntry(activity, loggedInUser, myDate);
+            dbCon.timeSheetEntry(labelStopTime, stopTime, loggedInUser, myDate, activity);
         }else{
             txtDisplayUserTime.append(concatText);
-            dbCon.activityEntry(activity, loggedInUser, myDate);
-            dbCon.timeSheetEntry(startTime, stopTime, loggedInUser, myDate);
+            dbCon.timeSheetEntry(startTime, stopTime, loggedInUser, myDate, activity);
         }
         
     }//GEN-LAST:event_btnStopTimeSheetActionPerformed
@@ -348,13 +350,13 @@ public class TimeSheet extends javax.swing.JFrame{
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    //public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
+        /*try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -369,16 +371,16 @@ public class TimeSheet extends javax.swing.JFrame{
             java.util.logging.Logger.getLogger(TimeSheet.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(TimeSheet.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        }*/
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TimeSheet().setVisible(true);
-            }
-        });
-    }
+        //java.awt.EventQueue.invokeLater(new Runnable() {
+            //public void run() {
+                //new TimeSheet().setVisible(true);
+            //}
+        //});
+    //}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAmendTimeSheet;
