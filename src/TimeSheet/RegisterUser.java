@@ -285,7 +285,11 @@ public class RegisterUser extends javax.swing.JFrame {
                 if(surname.length() != 0){
                     if(password.length() != 0){
                         if(confirmPassword.length() != 0){
-                            lblDisplayUsername.setText(objConnection.registerUser(password, title, name, surname));
+                            if(!(objConnection.checkSpecialCharacters(name+surname))){
+                                lblDisplayUsername.setText(objConnection.registerUser(password, title, name, surname));
+                            }else{
+                                JOptionPane.showMessageDialog(null, "Name and/or Surname cannot have special characters", "Error",JOptionPane.ERROR_MESSAGE);
+                            }
                         }else{
                             JOptionPane.showMessageDialog(null, "Confirm password field is empty!", "Error",JOptionPane.ERROR_MESSAGE);
                         }

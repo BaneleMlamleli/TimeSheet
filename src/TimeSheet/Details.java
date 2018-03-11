@@ -517,7 +517,12 @@ public class Details extends javax.swing.JFrame {
 
     private void btnSearchEmployeeEntryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchEmployeeEntryMouseClicked
         // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel) tblDisplayData.getModel();        
+        DefaultTableModel model = (DefaultTableModel) tblDisplayData.getModel();
+        
+        //The below code will clear the table everytime new information is displayed
+        model.getDataVector().removeAllElements();
+        model.fireTableDataChanged();
+        
         String getEmployee = cmbEmployee.getSelectedItem().toString();
         String employeeUsername = "";
         for(int i = 0; i < getEmployee.length(); i++){
@@ -548,6 +553,11 @@ public class Details extends javax.swing.JFrame {
         lblTimesheet_ID.setText("");
         
         DefaultTableModel model = (DefaultTableModel) tblDisplayEmployeeEntry.getModel();
+        
+        //The below code will clear the table everytime new information is displayed
+        model.getDataVector().removeAllElements();
+        model.fireTableDataChanged(); 
+        
         String getEmployee = cmbSearchEmployee.getSelectedItem().toString();
         lblAmendedUser.setText(getEmployee);
         for(int i = 0; i < getEmployee.length(); i++){

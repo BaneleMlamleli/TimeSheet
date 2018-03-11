@@ -214,4 +214,25 @@ public class DatabaseConnection {
             JOptionPane.showMessageDialog(null, "Unable to delete the selected row\n" + error.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }        
     }
+    
+    /*
+     * This method will check for special characters on the 
+     */
+    public boolean checkSpecialCharacters(String userNameAndSurname){
+        boolean containSpecialChar = false;
+        char specialChar[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                            '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '=',
+                            '+', '`', '~', '/', '?', '>', '.', '<', ',', ';', ':',
+                            '\"', '\\', '\'', '/', '[', ']', '{', '}', '|'};
+
+        for(int a = 0; a < userNameAndSurname.length(); a++){
+            for(int s = a; s < specialChar.length; s++){
+                if(userNameAndSurname.charAt(a) == specialChar[s]){
+                    containSpecialChar = true;
+                    break;
+                }
+            }
+        }        
+        return containSpecialChar;
+    }
 }

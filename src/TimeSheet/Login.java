@@ -69,6 +69,11 @@ public class Login extends javax.swing.JFrame {
                 btnLoginMouseClicked(evt);
             }
         });
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
 
         lblRegisterNewUser.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblRegisterNewUser.setForeground(new java.awt.Color(204, 0, 0));
@@ -204,6 +209,10 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "username field is empty!", "error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnLoginMouseClicked
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
      * @param args the command line arguments
