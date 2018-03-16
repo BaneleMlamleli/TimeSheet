@@ -5,6 +5,7 @@ import static java.lang.Thread.sleep;
 import javax.swing.*;
 import java.util.*;
 public class TimeSheet extends javax.swing.JFrame{
+    
     DatabaseConnection dbCon = new DatabaseConnection();
     Date dt = new Date();
     int hours = dt.getHours(), minutes = dt.getMinutes(),
@@ -17,6 +18,7 @@ public class TimeSheet extends javax.swing.JFrame{
     String loggedInUser;
     String year = Integer.toString(dt.getYear());
     String myDate = dt.getDate()+"/"+dt.getMonth()+"/"+("20"+year.substring(1, year.length()));
+    
     /**
      * Creates new form TimeSheet
      */
@@ -60,7 +62,6 @@ public class TimeSheet extends javax.swing.JFrame{
                                 hours++;
                             }
                             milliSeconds++;
-                            //lblRunningTimeMilliSec.setText(""+milliSeconds);
                             lblHour.setText(""+hours);
                             lblMinute.setText(""+minutes);
                             lblSecond.setText(""+seconds);
