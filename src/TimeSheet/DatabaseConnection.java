@@ -21,6 +21,9 @@ public class DatabaseConnection {
     static Statement stmnt = null;
     static PreparedStatement prepStmnt = null;
     
+    private JPasswordField jPasswrd = new javax.swing.JPasswordField();
+    private JPanel pnl = new JPanel(); 
+    
     public DatabaseConnection(){
                 try {
             /*
@@ -28,6 +31,7 @@ public class DatabaseConnection {
              * It will also check the database in the specified directory
              **/
             connect = DriverManager.getConnection("jdbc:ucanaccess://C:\\Users\\Shaun\\Documents\\Programming\\Java\\Projects\\TimeSheet\\src\\Database\\Timesheet.accdb");
+            //connect = DriverManager.getConnection("jdbc:derby://localhost:1527/TimeSheetDatabase", "Shaun", "C!ph3r01");
             System.out.println("Driver successfully loaded");
         } catch (SQLException ex) {
             //Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, null, ex);
@@ -59,7 +63,7 @@ public class DatabaseConnection {
              *          surname:    Cutter
              *          countRows:  5
              *
-             * Username JC5
+             * Username: JC5
              */
             loginUsername = ""+name.charAt(0)+surname.charAt(0)+countRows;
             
@@ -115,7 +119,7 @@ public class DatabaseConnection {
             ArrayList<String> usernames = new ArrayList<>();    //ArrayList to store usernames
             ArrayList<String> passwords = new ArrayList<>();    //ArrayList to store passwordss
                
-            //populating ArrayList with usernames and passwords from the database
+            //populating ArrayLists with usernames and passwords from the database
             while(checkCredentials.next()){
                 usernames.add(checkCredentials.getString("Username"));
                 passwords.add(checkCredentials.getString("Password"));
