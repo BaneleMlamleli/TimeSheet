@@ -18,7 +18,8 @@ Program flow
 ============
 
 1. Login screen
-This is a basic login screen that will allow a user to login or be registered if not registered on this system yet.
+- This is a basic login screen that will allow a user to login or be registered if not registered on this system yet.
+/images/login.PNG
 
 2. Timesheet screen
 - Once the user successfully login the Timesheet window will appear with the running time.Once the user logs in successfully that will be
