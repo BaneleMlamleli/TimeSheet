@@ -18,8 +18,8 @@ Program flow
 ============
 
 1. Login screen
-- This is a basic login screen that will allow a user to login or be registered if not registered on this system yet.
-/images/login.PNG
+- This is a basic login screen that will allow a user to login or be registered if not registered on this system yet.<br>
+<img src="/images/login.PNG">	
 
 2. Timesheet screen
 - Once the user successfully login the Timesheet window will appear with the running time.Once the user logs in successfully that will be
@@ -28,4 +28,5 @@ Program flow
   you're taking a break, going to a meeting or any other activity).
 - The TextArea will display all your activities until the you close you timesheet for the day.
 - If there's any changes that must be done your timesheet you can click <b><i>Amend timesheet</i></b>. The changes can only be done by an
-  authorised user (e.g., Manager, team leader e.t.c)
+  authorised user (e.g., Manager, team leader e.t.c)<br>
+  <img src="/images/timesheet.PNG">
